@@ -174,6 +174,15 @@ class AppServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        
+        $db = Config::get('database.connections.mysql');
+
+        if (
+            !empty($db['unix_socket']) &&
+            empty($db['password']) &&
+            extension_loaded('posix')
+        ) {
+            $user = posix_getpwuid(posix_geteuid())['name'];
+            Config::set('database.connections.mysql.username', $user);
+        }        
     }
 }
