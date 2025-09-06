@@ -121,7 +121,7 @@ class SendEDocument implements ShouldQueue
                 nlog($r->json());
                 $this->writeActivity($model, Activity::EINVOICE_DELIVERY_FAILURE, data_get($r->json(), 'errors.0.details', 'Unhandled error, check logs'));
             }
-
+            return;
         } elseif (Ninja::isSelfHost()) {
             return;
         }
